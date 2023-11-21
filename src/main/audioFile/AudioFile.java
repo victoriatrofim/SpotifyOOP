@@ -1,5 +1,9 @@
-package main.Audio_file;
+package main.audioFile;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
 public class AudioFile {
     private String name;
     private Integer duration;

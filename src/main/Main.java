@@ -2,18 +2,22 @@ package main;
 
 import checker.Checker;
 import checker.CheckerConstants;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import fileio.input.LibraryInput;
-import fileio.input.SongInput;
+import main.colectionsAudio.Library;
+import main.commands.CommandGenerator;
+import main.commands.CommandInterface;
+import main.test.Instruction;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -21,6 +25,7 @@ import java.util.Objects;
  */
 public final class Main {
     static final String LIBRARY_PATH = CheckerConstants.TESTS_PATH + "library/library.json";
+    public static ArrayNode output;
 
     /**
      * for coding style
@@ -71,34 +76,39 @@ public final class Main {
     public static void action(final String filePathInput,
                               final String filePathOutput) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        LibraryInput library = objectMapper.readValue(new File(LIBRARY_PATH), LibraryInput.class);
-
-        ArrayNode outputs = objectMapper.createArrayNode();
-        for (SongInput song : library.getSongs()) {
-            ObjectNode objectNode = objectMapper.createObjectNode();
-            objectNode.set("name", objectMapper.valueToTree(song.getName()));
-            objectNode.set("album", objectMapper.valueToTree(song.getAlbum()));
-            objectNode.set("duration", objectMapper.valueToTree(song.getDuration()));
-
-//            "name": "Shape of You",
-//                    "duration": 233,
-//                    "album": "Divide",
-//                    "tags": [
-//            "#pop",
-//                    "#mostlistenedthisyear",
-//                    "#spotify"
-//     ],
-//            "lyrics": "The club isn't the best place to find a lover, So the bar is where I go (mm-mm)",
-//                    "genre": "Pop",
-//                    "releaseYear": 2017,
-//                    "artist": "Ed Sheeran"
-
-            outputs.add(objectNode);
-        }
+        LibraryInput libraryInput
+                = objectMapper.readValue(new File(LIBRARY_PATH), LibraryInput.class);
+        Library library = new Library();
+        library.extractSongs(libraryInput);
         // TODO add your implementation
+        //System.out.println(filePathInput);
+        //System.out.println(CheckerConstants.TESTS_PATH);
 
+
+
+        String inputFile = CheckerConstants.TESTS_PATH + "test01_searchBar_songs_podcasts.json";
+//        String inputFile = CheckerConstants.TESTS_PATH + filePathInput;
+
+
+
+
+        ArrayList<Instruction> instructionArrayList
+                = objectMapper.readValue(
+                        new File(inputFile),
+                        new TypeReference<ArrayList<Instruction>>() { }
+                );
+
+        output = objectMapper.createArrayNode();
+
+        CommandGenerator commandGenerator = new CommandGenerator();
+        CommandInterface command;
+
+        for (Instruction instruction : instructionArrayList) {
+            command = commandGenerator.generate(instruction.getCommand());
+            command.act(instruction);
+        }
 
         ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
-        objectWriter.writeValue(new File(filePathOutput), outputs);
+        objectWriter.writeValue(new File(filePathOutput), output);
     }
 }

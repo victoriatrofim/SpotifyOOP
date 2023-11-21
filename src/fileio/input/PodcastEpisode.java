@@ -1,11 +1,11 @@
 package fileio.input;
 
-public final class EpisodeInput {
+public final class PodcastEpisode {
     private String name;
     private Integer duration;
     private String description;
 
-    public EpisodeInput() {
+    public PodcastEpisode() {
     }
 
     public String getName() {
