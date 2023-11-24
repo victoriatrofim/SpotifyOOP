@@ -1,7 +1,5 @@
 package main.test;
 import lombok.Data;
-import java.util.ArrayList;
-
 @Data
 public class Instruction {
     private String command;
