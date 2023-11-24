@@ -1,9 +1,11 @@
 package main.commands;
 
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import main.colectionsAudio.Library;
 import main.test.Instruction;
 
+
 public interface CommandInterface {
+    /**
+     * @param instruction arrayNode of data from Json
+     */
     void act(Instruction instruction);
 }
