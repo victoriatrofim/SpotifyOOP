@@ -6,10 +6,10 @@ import main.audioFile.Song;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Library {
+public class LibrarySongs {
     private static List<Song> songs;
 
-    public Library() {
+    public LibrarySongs() {
     }
 
     /**
@@ -23,7 +23,7 @@ public class Library {
      * @param songs
      */
     public void setSongs(final List<Song> songs) {
-        Library.songs = songs;
+        LibrarySongs.songs = songs;
     }
 
     /**

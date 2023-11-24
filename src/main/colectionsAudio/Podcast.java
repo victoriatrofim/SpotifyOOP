@@ -1,11 +1,11 @@
 package main.colectionsAudio;
 
 import fileio.input.PodcastEpisode;
+import fileio.input.PodcastInput;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
-
 @Data
 @NoArgsConstructor
 public class Podcast extends ColectionAudioFiles {
@@ -21,4 +21,8 @@ public class Podcast extends ColectionAudioFiles {
         this.episodes = episodes;
     }
 
+    public Podcast(final PodcastInput inputPodcast) {
+        super(inputPodcast.getName(), inputPodcast.getOwner(), "podcast");
+        this.episodes = inputPodcast.getEpisodes();
+    }
 }

@@ -11,7 +11,8 @@ import java.util.List;
 @NoArgsConstructor
 public class Playlist extends ColectionAudioFiles {
     private boolean isPublic = true;
-    private List<Song> playlist = new ArrayList<>();
+    private List<Song> songs = new ArrayList<>();
+
 
     public Playlist(
             final String name,
@@ -22,7 +23,7 @@ public class Playlist extends ColectionAudioFiles {
     ) {
         super(name, owner, "playlist");
         this.isPublic = isPublic;
-        this.playlist = playlist;
+        this.songs = playlist;
     }
 
 }

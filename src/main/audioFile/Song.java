@@ -18,10 +18,10 @@ public class Song extends AudioFile {
     private Integer releaseYear;
     private String artist;
 
-    public Song(String name, Integer duration, String type,
-                String album, ArrayList<String> tags,
-                String lyrics, String genre,
-                Integer releaseYear, String artist) {
+    public Song(final String name, final Integer duration, final String type,
+                final String album, final ArrayList<String> tags,
+                final String lyrics, final String genre,
+                final Integer releaseYear, final String artist) {
         super(name, duration, "song");
         this.album = album;
         this.tags = tags;
@@ -30,7 +30,7 @@ public class Song extends AudioFile {
         this.releaseYear = releaseYear;
         this.artist = artist;
     }
-    public Song(SongInput song) {
+    public Song(final SongInput song) {
         super(song.getName(), song.getDuration(), "song");
         this.album = song.getAlbum();
         this.tags = song.getTags();

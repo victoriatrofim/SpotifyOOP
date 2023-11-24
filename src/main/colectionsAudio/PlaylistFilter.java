@@ -1,5 +1,6 @@
 package main.colectionsAudio;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PlaylistFilter {
@@ -9,30 +10,37 @@ public class PlaylistFilter {
         this.playlists = playlists;
     }
 
-//    public List<Playlist> filterByName(String name) {
-//        List<Playlist> matchingName = new ArrayList<>();
-//        for (Playlist playlistIter : playlists) {
-//            if (playlistIter.getName().toLowerCase().startsWith(name.toLowerCase()) ) {
-//                matchingName.add(playlistIter);
-//            }
-//            if (matchingName.size() == 5) {
-//                break;
-//            }
-//        }
-//        return matchingName;
-//    }
+    /**
+     * @param playlistList
+     * @param name
+     * @return
+     */
+    public static List<Playlist> filterByName(final List<Playlist> playlistList,
+                                              final String name) {
+        if (playlistList == null) {
+            return new ArrayList<>();
+        } else {
+            return playlistList.stream().filter(podcast -> podcast
+                            .getName()
+                            .startsWith(name))
+                    .toList();
+        }
+    }
 
-//    public List<Playlist> filterByOwner(String ownerName) {
-//        List<Playlist> matchingUsername = new ArrayList<>();
-//        for (Playlist playlistIter : playlists) {
-//            if (playlistIter.getOwner().equalsIgnoreCase(ownerName) ) {
-//                matchingUsername.add(playlistIter);
-//            }
-//            if (matchingUsername.size() == 5) {
-//                break;
-//            }
-//        }
-//        return matchingUsername;
-//    }
-
+    /**
+     *
+     * @param ownerName
+     * @return
+     */
+    public static final List<Playlist> filterByOwner(
+            final List<Playlist> playlistList, final String ownerName) {
+        if (playlistList == null) {
+            return new ArrayList<>();
+        } else {
+            return playlistList.stream().filter(podcast -> podcast
+                            .getOwner()
+                            .equalsIgnoreCase(ownerName))
+                    .toList();
+        }
+    }
 }

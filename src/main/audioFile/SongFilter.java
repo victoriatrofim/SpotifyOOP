@@ -1,109 +1,117 @@
 package main.audioFile;
 
-import fileio.input.SongInput;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SongFilter{
+public class SongFilter {
+    private final int limit = 5;
     private List<Song> songs;
 
-    public SongFilter(List<Song> songs) {
+    public SongFilter(final List<Song> songs) {
         this.songs = songs;
     }
 
-    public List<Song> filterByName(List<Song> songList, String name) {
+    /**
+     *
+     * @param songList
+     * @param name
+     * @return
+     */
+    public List<Song> filterByName(final List<Song> songList, final String name) {
         return songList
                 .stream()
                 .filter(song -> song.getName().startsWith(name))
                 .toList();
     }
 
-    public List<Song> filterByAlbum(String album) {
-        List<Song> matchingAlbums = new ArrayList<Song>();
-        for (Song song : songs) {
-            if (song.getAlbum().equalsIgnoreCase(album)) {
-                matchingAlbums.add(song);
-            }
-            if (matchingAlbums.size() == 5) {
-                break;
-            }
-        }
-        return matchingAlbums;
+    /**
+     *
+     * @param songList
+     * @param albumName
+     * @return
+     */
+    public List<Song> filterByAlbum(final List<Song> songList, final String albumName) {
+        return songList
+                .stream()
+                .filter(song -> song.getAlbum().equalsIgnoreCase(albumName))
+                .toList();
     }
 
-    public List<Song> filterByTags(ArrayList<String> tags) {
-        if (tags == null) {
-            return new ArrayList<>();
-        }
-        List<Song> matchingTags = new ArrayList<Song>();
-        for (Song song : songs) {
-            if (song.getTags().containsAll(tags)) {
-                matchingTags.add(song);
-            }
-            if (matchingTags.size() == 5) {
-                break;
-            }
-        }
-        return matchingTags;
+    /**
+     *
+     * @param songList
+     * @param tags
+     * @return
+     */
+    public List<Song> filterByTags(final List<Song> songList, final ArrayList<String> tags) {
+        return songList
+                .stream()
+                .filter(song -> song.getTags().containsAll(tags))
+                .toList();
     }
 
-    public List<Song> filterByLyrics(String string) {
-        List<Song> matchingLyrics = new ArrayList<Song>();
-        for (Song song : songs) {
-            if (song.getLyrics().contains(string)) {
-                matchingLyrics.add(song);
-            }
-            if (matchingLyrics.size() == 5) {
-                break;
-            }
-        }
-        return matchingLyrics;
+    /**
+     *
+     * @param songList
+     * @param lyrics
+     * @return
+     */
+    public List<Song> filterByLyrics(final List<Song> songList, final String lyrics) {
+        return songList
+                .stream()
+                .filter(song -> song.getLyrics().contains(lyrics))
+                .toList();
     }
 
-    public List<Song> filterByGenre(String genre) {
-        List<Song> matchingGenre = new ArrayList<Song>();
-        for (Song song : songs) {
-            if (song.getGenre().equalsIgnoreCase(genre)) {
-                matchingGenre.add(song);
-            }
-            if (matchingGenre.size() == 5) {
-                break;
-            }
-        }
-        return matchingGenre;
+    /**
+     * @param songList
+     * @param genre
+     * @return
+     */
+    public List<Song> filterByGenre(final List<Song> songList, final String genre) {
+        return songList
+                .stream()
+                .filter(song -> song.getGenre().equalsIgnoreCase(genre))
+                .toList();
     }
 
-    public List<Song> filterByYear(String interval) {
+    /**
+     *
+     * @param songList
+     * @param interval
+     * @return
+     */
+    public List<Song> filterByYear(final List<Song> songList, final String interval) {
         char symbol = interval.charAt(0);
-        int referenceYear = Integer.parseInt(interval.substring(1));
-
-        List<Song> matchingYear = new ArrayList<>();
-        for (Song song : songs) {
-            int songReleaseYear = song.getReleaseYear();
-            if ((symbol == '<') && (songReleaseYear < referenceYear)) {
-                matchingYear.add(song);
-            } else if ((symbol == '>') && (songReleaseYear > referenceYear)) {
-                matchingYear.add(song);
-            }
-            if (matchingYear.size() == 5) {
-                break;
-            }
+        if (symbol == '<') {
+            return songList
+                    .stream()
+                    .filter(song ->
+                            (song.getReleaseYear() < Integer.parseInt(interval.substring(1))
+                            ? Boolean.TRUE : Boolean.FALSE))
+                    .toList();
+        } else {
+            return songList
+                    .stream()
+                    .filter(song ->
+                            (song.getReleaseYear() > Integer.parseInt(interval.substring(1))
+                            ? Boolean.TRUE : Boolean.FALSE))
+                    .toList();
         }
-        return matchingYear;
     }
 
-    public List<Song> filterByArtist(String artistName) {
-        List<Song> matchingArtist = new ArrayList<Song>();
-        for (Song song : songs) {
-            if (song.getArtist().equalsIgnoreCase(artistName)) {
-                matchingArtist.add(song);
-            }
-            if (matchingArtist.size() == 5) {
-                break;
-            }
-        }
-        return matchingArtist;
+    /**
+     *
+     * @param songList
+     * @param artistName
+     * @return
+     */
+    public List<Song> filterByArtist(final List<Song> songList, final String artistName) {
+        return songList
+                .stream()
+                .filter(song -> song.getArtist().equalsIgnoreCase(artistName))
+                .toList();
     }
 }
 
